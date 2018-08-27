@@ -10,7 +10,7 @@
 <body>
 <script>
   // TrustedURL Assignments
-  let testCases = [
+  let URLTestCases = [
     [ 'a', 'href' ],
     [ 'area', 'href' ],
     [ 'base', 'href' ],
@@ -26,7 +26,7 @@
     [ 'track', 'src' ]
   ];
 
-  testCases.forEach(c => {
+  URLTestCases.forEach(c => {
     async_test(t => {
       assert_element_accepts_trusted_url(window, t, c[0], c[1], RESULTS.URL);
       assert_throws_no_trusted_type(c[0], c[1], 'A string');
@@ -35,12 +35,12 @@
   });
 
   // TrustedScriptURL Assignments
-  let scriptTestCases = [
+  let ScriptURLTestCases = [
     [ 'embed', 'src' ],
     [ 'script', 'src' ]
   ];
 
-  scriptTestCases.forEach(c => {
+  ScriptURLTestCases.forEach(c => {
     async_test(t => {
       assert_element_accepts_trusted_script_url(window, t, c[0], c[1], RESULTS.SCRIPTURL);
       assert_throws_no_trusted_type(c[0], c[1], 'A string');
@@ -60,5 +60,18 @@
       assert_throws_no_trusted_type(c[0], c[1], 'A string');
       assert_throws_no_trusted_type(c[0], c[1], null);
     }, c[0] + "." + c[1] + " accepts only TrustedHTML");
+  });
+
+  // TrustedScript Assignments
+  let ScriptTestCases = [
+    [ 'script', 'text' ]
+  ];
+
+  ScriptTestCases.forEach(c => {
+    async_test(t => {
+      assert_element_accepts_trusted_script(window, t, c[0], c[1], RESULTS.SCRIPT);
+      assert_throws_no_trusted_type(c[0], c[1], 'A string');
+      assert_throws_no_trusted_type(c[0], c[1], null);
+    }, c[0] + "." + c[1] + " accepts only TrustedScript");
   });
 </script>
